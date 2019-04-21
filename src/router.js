@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import GameView from '@/views/GameView'
+import ResultView from '@/views/ResultView'
 
 Vue.use(Router);
 
@@ -12,12 +13,12 @@ const router = new Router({
       component: GameView,
       props: true
     },
-    // {
-    //   path: '/result',
-    //   name: 'result',
-    //   component: ResultView,
-    //   props: true
-    // }
+    {
+      path: '/result',
+      name: 'result',
+      component: ResultView,
+      props: true
+    }
   ]
 })
 

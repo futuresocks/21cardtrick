@@ -9,7 +9,7 @@
 import CardDisplay from '@/components/CardDisplay';
 
 export default {
-  props: ['column', 'recompile', 'deal'],
+  props: ['column', 'recompile'],
   components: {
     CardDisplay
   },

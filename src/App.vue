@@ -1,10 +1,10 @@
 <template lang="html">
-  <div>
   <router-view id="view" :cards="cards" :handleReorderedCards="changeCards"/>
-</div>
 </template>
 
 <script>
+import router from '@/router';
+
 export default {
   name: 'app',
   data(){
@@ -26,8 +26,11 @@ export default {
       .then(res => res.json())
       .then(json => this.cards = json.cards)
     },
-    changeCards(cards){
+    changeCards(cards, roundsToGo){
       this.cards = cards;
+      if(roundsToGo === 0){
+        router.push({name: 'result', params: {card: this.cards[10]}})
+      }
     }
   }
 }

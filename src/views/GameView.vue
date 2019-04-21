@@ -1,9 +1,10 @@
 <template lang="html">
   <div>
     <div id="card-columns">
-      <CardColumn :column="columnA" :recompile="recompile" :deal="deal"/>
-      <CardColumn :column="columnB" :recompile="recompile" :deal="deal"/>
-      <CardColumn :column="columnC" :recompile="recompile" :deal="deal"/>
+      <h1>{{roundsToGo}} to go!</h1>
+      <CardColumn :column="columnA" :recompile="recompile"/>
+      <CardColumn :column="columnB" :recompile="recompile"/>
+      <CardColumn :column="columnC" :recompile="recompile"/>
     </div>
   </div>
 </template>
@@ -20,7 +21,8 @@ export default {
     return {
       columnA: {selected: false, cards: []},
       columnB: {selected: false, cards: []},
-      columnC: {selected: false, cards: []}
+      columnC: {selected: false, cards: []},
+      roundsToGo: 3
     }
   },
   watch: {
@@ -47,7 +49,8 @@ export default {
                             .map(column => column.cards)
                             .reduce((flat, toFlatten) => flat.concat(toFlatten), []);
       this.resetColumns();
-      this.handleReorderedCards(reorderedCards);
+      this.roundsToGo -= 1;
+      this.handleReorderedCards(reorderedCards, this.roundsToGo);
     }
   },
   computed: {
