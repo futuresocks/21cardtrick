@@ -1,5 +1,5 @@
 <template lang="html">
-  <GameView :cards="cards"/>
+  <GameView :cards="cards" :handleReorderedCards="changeCards"/>
 </template>
 
 <script>
@@ -27,6 +27,9 @@ export default {
       fetch(`https://deckofcardsapi.com/api/deck/${deckID}/draw/?count=21`)
       .then(res => res.json())
       .then(json => this.cards = json.cards)
+    },
+    changeCards(cards){
+      this.cards = cards;
     }
   }
 }

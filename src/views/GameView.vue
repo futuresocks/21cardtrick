@@ -6,6 +6,7 @@
       <CardColumn :column="columnC"/>
     </div>
     <button v-on:click="deal">DEAL</button>
+    <button v-on:click="recompile">RECOMPILE</button>
 
   </div>
 </template>
@@ -14,7 +15,7 @@
 import CardColumn from '@/components/CardColumn';
 
 export default {
-  props: ['cards'],
+  props: ['cards', 'handleReorderedCards'],
   components: {
     CardColumn
   },
@@ -28,15 +29,28 @@ export default {
   methods: {
     deal(){
       while(this.cards.length){
-        const columns = [this.columnA, this.columnB, this.columnC];
-        columns.forEach(column => column.cards.push(this.cards.shift()));
+        this.columns.forEach(column => column.cards.push(this.cards.shift()));
       }
     },
+    resetColumns(){
+      this.columnA = {selected: false, cards: []};
+      this.columnB = {selected: false, cards: []};
+      this.columnC = {selected: false, cards: []};
+    },
     recompile(){
-      //filter the unselected cards
-      //insert the selected cards in between
-      //concat the three arrays
-      //eventBus them to the top again
+      const reorderedColumns = this.columns.filter(column => !column.selected);
+      const selectedColumn = this.columns.find(column => column.selected);
+      reorderedColumns.splice(1, 0, selectedColumn);
+      const reorderedCards = reorderedColumns
+                            .map(column => column.cards)
+                            .reduce((flat, toFlatten) => flat.concat(toFlatten), []);
+      this.resetColumns();
+      this.handleReorderedCards(reorderedCards);
+    }
+  },
+  computed: {
+    columns(){
+      return [this.columnA, this.columnB, this.columnC];
     }
   }
 }
