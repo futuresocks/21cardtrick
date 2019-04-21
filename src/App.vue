@@ -1,58 +1,37 @@
 <template lang="html">
-  <div id="cardDisplay">
-  <h1>IMMA READ YOUR MIND</h1>
-  <ul>
-    <li v-for="card in columnA"><img :src="card.image"/></li>
-  </ul>
-  <ul>
-    <li v-for="card in columnB"><img :src="card.image"/></li>
-  </ul>
-  <ul>
-    <li v-for="card in columnC"><img :src="card.image"/></li>
-  </ul>
-  <button v-on:click="deal">DEAL</button>
-</div>
+  <GameView :cards="cards"/>
 </template>
 
 <script>
+import GameView from '@/views/GameView';
+
 export default {
   data(){
     return {
-      cards: [],
-      columnA: [],
-      columnB: [],
-      columnC: [],
+      cards: []
     }
   },
+  components: {
+    GameView
+  },
   mounted(){
-    fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
-    .then(res => res.json())
-    .then(json => {
-      fetch(`https://deckofcardsapi.com/api/deck/${json.deck_id}/draw/?count=21`)
-      .then(res => res.json())
-      .then(json => this.cards = json.cards)
-    })
+    this.getDeck()
+    .then(json => this.draw21(json.deck_id));
   },
   methods: {
-    deal(){
-      debugger;
-      while(this.cards.length){
-        const columns = [this.columnA, this.columnB, this.columnC];
-        columns.forEach((column) => {
-          column.push(this.cards.shift());
-        })
-      }
+    getDeck(){
+      return fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
+      .then(res => res.json())
+    },
+    draw21(deckID){
+      fetch(`https://deckofcardsapi.com/api/deck/${deckID}/draw/?count=21`)
+      .then(res => res.json())
+      .then(json => this.cards = json.cards)
     }
   }
 }
 </script>
 
 <style lang="css" scoped>
-img {
-  height: 100px;
-}
 
-#cardDisplay {
-  display: flex;
-}
 </style>
