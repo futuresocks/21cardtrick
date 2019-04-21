@@ -1,28 +1,25 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+<template lang="html">
+  <h1>IMMA READ YOUR MIND</h1>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  data(){
+    return {
+      cards: []
+    }
+  },
+  mounted(){
+    fetch("https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1")
+    .then(res => res.json())
+    .then(json => {
+      fetch(`https://deckofcardsapi.com/api/deck/${json.deck_id}/draw/?count=21`)
+      .then(res => res.json())
+      .then(json => this.cards = json.cards)
+    })
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="css" scoped>
 </style>
