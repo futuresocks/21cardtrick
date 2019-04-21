@@ -1,13 +1,10 @@
 <template lang="html">
   <div>
     <div id="card-columns">
-      <CardColumn :column="columnA"/>
-      <CardColumn :column="columnB"/>
-      <CardColumn :column="columnC"/>
+      <CardColumn :column="columnA" :recompile="recompile" :deal="deal"/>
+      <CardColumn :column="columnB" :recompile="recompile" :deal="deal"/>
+      <CardColumn :column="columnC" :recompile="recompile" :deal="deal"/>
     </div>
-    <button v-on:click="deal">DEAL</button>
-    <button v-on:click="recompile">RECOMPILE</button>
-
   </div>
 </template>
 
@@ -24,6 +21,11 @@ export default {
       columnA: {selected: false, cards: []},
       columnB: {selected: false, cards: []},
       columnC: {selected: false, cards: []}
+    }
+  },
+  watch: {
+    cards(){
+      this.deal();
     }
   },
   methods: {

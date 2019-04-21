@@ -11,6 +11,8 @@ export default {
 <style lang="css" scoped>
 
 img {
-  height: 40px;
+  height: 100px;
+  width: 66px;
+  padding: 5px;
 }
 </style>

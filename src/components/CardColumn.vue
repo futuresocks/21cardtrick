@@ -9,14 +9,14 @@
 import CardDisplay from '@/components/CardDisplay';
 
 export default {
-  props: ['column'],
+  props: ['column', 'recompile', 'deal'],
   components: {
     CardDisplay
   },
   methods: {
     columnSelect(){
       this.column.selected = true;
-      //eventBus to trigger recompiling of cards 
+      this.recompile();
     }
   }
 }
@@ -26,5 +26,6 @@ export default {
 .card-column {
   display: flex;
   flex-direction: column;
+  padding: 20px;
 }
 </style>
