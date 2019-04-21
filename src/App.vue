@@ -1,18 +1,16 @@
 <template lang="html">
-  <GameView :cards="cards" :handleReorderedCards="changeCards"/>
+  <div>
+  <router-view id="view" :cards="cards" :handleReorderedCards="changeCards"/>
+</div>
 </template>
 
 <script>
-import GameView from '@/views/GameView';
-
 export default {
+  name: 'app',
   data(){
     return {
       cards: []
     }
-  },
-  components: {
-    GameView
   },
   mounted(){
     this.getDeck()
