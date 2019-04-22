@@ -9,16 +9,22 @@
 
 <script>
 import caol from 'caol';
+import router from '@/router';
 import CardDisplay from '@/components/CardDisplay';
 
 export default {
   props: ['card'],
+  mounted(){
+    if(!this.card){
+      router.push({name: 'game'})
+    }
+  },
   components: {
     CardDisplay
   },
   methods: {
     yes(){
-      
+
     },
     no(){
 
